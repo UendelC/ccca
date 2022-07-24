@@ -19,9 +19,45 @@ test('An Overnight ride can be calculated', () => {
     const payload: Ride[] = [
         {
             dist: distance,
-            ds: new Date('2022-07-22T00:00:00.000Z'),
+            ds: new Date('2022-07-22T01:00:00.000Z'),
         }
     ];
 
     expect(calc(payload)).toBe(distance * 3.90);
-})
+});
+
+test('A Sunday and overnight ride can be calculated', () => {
+    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const payload: Ride[] = [
+        {
+            dist: distance,
+            ds: new Date('2022-07-24T04:00:00.000Z'),
+        }
+    ];
+
+    expect(calc(payload)).toBe(distance * 5);
+});
+
+test('A Sunday and normal ride can be calculated', () => {
+    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const payload: Ride[] = [
+        {
+            dist: distance,
+            ds: new Date('2022-07-25T00:00:00.000Z'),
+        }
+    ];
+
+    expect(calc(payload)).toBe(distance * 2.9);
+});
+
+test('An invalid date returns -2', () => {
+    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const payload: Ride[] = [
+        {
+            dist: distance,
+            ds: new Date('invalid'),
+        }
+    ];
+
+    expect(calc(payload)).toBe(-2);
+});

@@ -8,6 +8,7 @@ export function calc (movArray) {
 
 				// overnight
                 console.log('valores válidos');
+				console.log('mov.ds: ' + mov.ds.toString());
 				if (mov.ds.getHours() >= 22 || mov.ds.getHours() <= 6) {
                     console.log('overnight');
 					// not sunday
@@ -22,12 +23,15 @@ export function calc (movArray) {
 					}
 				} else {
 					// sunday
+					console.log('não é overnight');
 					if (mov.ds.getDay() === 0) {
-
+						console.log('é domingo');
 						result += mov.dist * 2.9;
 
 					} else {
+						console.log('dia normal');
 						result += mov.dist * 2.10;
+
 
 					}
 				}
