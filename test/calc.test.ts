@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import Ride from "../src/Ride";
 
 test('A normal ride with base distance can be calculated', () => {
-    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const distance: number = faker.datatype.number({ min: 5, max: 100 });
     const payload: Ride[] = [
         {
             dist: distance,
@@ -15,7 +15,7 @@ test('A normal ride with base distance can be calculated', () => {
 });
 
 test('An Overnight ride can be calculated', () => {
-    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const distance: number = faker.datatype.number({ min: 5, max: 100 });
     const payload: Ride[] = [
         {
             dist: distance,
@@ -27,7 +27,7 @@ test('An Overnight ride can be calculated', () => {
 });
 
 test('A Sunday and overnight ride can be calculated', () => {
-    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const distance: number = faker.datatype.number({ min: 5, max: 100 });
     const payload: Ride[] = [
         {
             dist: distance,
@@ -39,7 +39,7 @@ test('A Sunday and overnight ride can be calculated', () => {
 });
 
 test('A Sunday and normal ride can be calculated', () => {
-    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const distance: number = faker.datatype.number({ min: 5, max: 100 });
     const payload: Ride[] = [
         {
             dist: distance,
@@ -51,7 +51,7 @@ test('A Sunday and normal ride can be calculated', () => {
 });
 
 test('An invalid date returns -2', () => {
-    const distance: number = faker.datatype.number({ min: 1, max: 100 });
+    const distance: number = faker.datatype.number({ min: 5, max: 100 });
     const payload: Ride[] = [
         {
             dist: distance,
@@ -60,4 +60,28 @@ test('An invalid date returns -2', () => {
     ];
 
     expect(calc(payload)).toBe(-2);
+});
+
+test('An invalid distance returns -1', () => {
+    const distance: number = faker.datatype.number({ min: -100, max: -5 });
+    const payload: Ride[] = [
+        {
+            dist: distance,
+            ds: new Date('2022-07-22T10:00:00.000Z'),
+        }
+    ];
+
+    expect(calc(payload)).toBe(-1);
+})
+
+test('A ride has the minimum price of 10', () => {
+    const distance: number = faker.datatype.number({ min: 1, max: 4 });
+    const payload: Ride[] = [
+        {
+            dist: distance,
+            ds: new Date('2022-07-22T10:00:00.000Z'),
+        }
+    ];
+
+    expect(calc(payload)).toBe(10);
 });
